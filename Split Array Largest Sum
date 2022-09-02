@@ -1,0 +1,63 @@
+//Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays.
+
+//Write an algorithm to minimize the largest sum among these m subarrays.
+
+
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        
+    int n=nums.length;
+    int l=nums[0];
+        
+    int h=0;
+    
+    for(int i=0;i<n;i++)
+    {
+        h=h+nums[i];
+    }
+      
+        
+    int res=0;
+        
+    while(l<=h)
+    {
+      int m=(l+h)/2;
+    //System.out.println(m);
+      if(possible(nums,m,k))
+      {
+          res=m;
+          h=m-1;
+      }
+        else
+        l=m+1;
+    }
+    return res;
+        
+    }
+ public boolean possible(int nums[],int barrier,int k)
+ {
+    int allocated=1;
+     int pages=0;
+     for(int i=0;i<nums.length;i++)
+     {
+         if(nums[i]>barrier)
+             return false;
+        else if(pages+nums[i]>barrier)
+         {
+             allocated++;
+            pages=nums[i];
+            
+         }
+         else
+         {
+             pages=pages+nums[i];
+         }
+     }
+     if(allocated>k)
+         return false;
+     else
+     return true;
+ }
+}
+
+ 
